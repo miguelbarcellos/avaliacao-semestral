@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Cadastro de Disciplinas{% endblock %}
+
+{% block page_content %}
+<h3>Cadastre a nova disciplina e o semestre associado:</h3>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.nome.label }}
+        {{ form.nome(class="form-control") }}
+    </div>
+
+    <br>
+
+    {% for value, label in form.semestre.choices %}
+        <div class="radio">
+            <label>
+                <input type="radio" name="semestre" value="{{ value }}"
+                    {% if form.semestre.data == value %}checked{% endif %}>
+                {{ label }}
+            </label>
+        </div>
+    {% endfor %}
+
+    <br>
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+
+<br><br>
+
+<h3>Relação de disciplinas cadastradas</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Disciplina</th>
+            <th>Semestre</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for d in disciplinas %}
+        <tr>
+            <td>{{ d.nome }}</td>
+            <td>{{ d.semestre }}º semestre</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
